@@ -1,0 +1,184 @@
+/* Twin Lanterns — spot the difference. Warm dusk theme, gold accents, text
+   kept large so the game still reads when a screenshot is shrunk. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #10182e;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #f4ead6;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  position: relative;
+  width: 1280px;
+  height: 800px;
+  background: linear-gradient(180deg, #1a2340 0%, #121a30 55%, #0e1424 100%);
+  overflow: hidden;
+  padding: 12px 16px;
+}
+
+#hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 4px 8px;
+}
+
+.hud-left { min-width: 340px; }
+#scene-name { font-size: 21px; font-weight: 700; color: #ffd34d; letter-spacing: 0.4px; }
+#scene-tag { font-size: 13px; color: #b9c4d6; margin-top: 2px; font-style: italic; }
+
+.hud-mid { text-align: center; }
+#left-count {
+  font-size: 34px;
+  font-weight: 800;
+  color: #ffd34d;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+}
+#found-count { font-size: 14px; color: #d8e2f0; margin-top: 3px; }
+
+.hud-right { text-align: right; min-width: 340px; }
+#timer {
+  font-size: 30px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #eaf2ff;
+}
+#timer.low { color: #ff5a5a; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.55; } }
+#score-box { font-size: 15px; color: #d8e2f0; margin-top: 2px; }
+#score { font-weight: 800; color: #ffd34d; font-size: 19px; }
+#combo { color: #7ee0ff; font-weight: 700; margin-left: 8px; }
+
+#progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 8px;
+}
+#progress-dots { font-size: 15px; color: #ffd34d; letter-spacing: 6px; }
+.hud-btns { display: flex; gap: 8px; }
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a2340;
+  background: #ffd34d;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: #ffe08a; }
+button:disabled { opacity: 0.45; cursor: default; }
+button.ghost {
+  background: transparent;
+  color: #ffd34d;
+  border: 2px solid #ffd34d;
+}
+button.ghost:hover { background: rgba(255, 211, 77, 0.15); }
+
+#panels { display: flex; gap: 16px; }
+.panel { flex: 0 0 auto; }
+.panel-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #9fb0cc;
+  padding: 0 2px 6px;
+}
+.panel-label b { color: #ffd34d; }
+canvas#panel-left, canvas#panel-right {
+  display: block;
+  width: 620px;
+  height: 440px;
+  border: 3px solid #ffd34d;
+  border-radius: 10px;
+  background: #0b1220;
+  cursor: crosshair;
+}
+
+#help {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #9fb0cc;
+}
+
+#crosshair {
+  display: none;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 2px solid #ffd34d;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+}
+#crosshair::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 4px;
+  height: 4px;
+  background: #ffd34d;
+  border-radius: 50%;
+}
+
+#lens {
+  display: none;
+  position: fixed;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 6;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 14, 28, 0.84);
+  z-index: 10;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+.overlay.show { display: flex; }
+
+.overlay h1 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 64px;
+  color: #ffd34d;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+}
+.overlay h2 { font-size: 40px; color: #ffd34d; margin-bottom: 10px; }
+.overlay .sub { font-size: 19px; color: #d8e2f0; margin: 12px 0 22px; max-width: 640px; line-height: 1.5; }
+.overlay .rules {
+  font-size: 15px;
+  color: #b9c4d6;
+  line-height: 1.9;
+  margin-bottom: 26px;
+  text-align: left;
+}
+.overlay .rules b { color: #ffd34d; }
+.overlay .scenes {
+  font-size: 14px;
+  color: #9fb0cc;
+  margin-bottom: 26px;
+  letter-spacing: 0.5px;
+}
+.overlay .big-btn { font-size: 20px; padding: 14px 42px; }
+.overlay .detail { font-size: 18px; color: #eaf2ff; line-height: 1.6; max-width: 620px; margin-bottom: 24px; }

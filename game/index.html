@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Twin Lanterns — Spot the Difference</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="hud-left">
+      <div id="scene-name">Scene 1 of 5 — Lantern Market</div>
+      <div id="scene-tag">Dusk falls over the night stalls</div>
+    </div>
+    <div class="hud-mid">
+      <div id="left-count">7 LEFT</div>
+      <div id="found-count">0 / 7 found</div>
+    </div>
+    <div class="hud-right">
+      <div id="timer">02:00</div>
+      <div id="score-box">SCORE <span id="score">0</span><span id="combo"></span></div>
+    </div>
+  </header>
+  <div id="progress-row">
+    <span id="progress-dots">◉ ○ ○ ○ ○</span>
+    <span class="hud-btns">
+      <button id="hint-btn" type="button">Hint (3)</button>
+      <button id="mag-btn" type="button">Magnifier (M)</button>
+      <button id="sound-btn" type="button">Sound: ON (S)</button>
+      <button id="pause-btn" type="button">Pause (P)</button>
+    </span>
+  </div>
+  <main id="panels">
+    <div class="panel">
+      <div class="panel-label"><b>LEFT</b> — ORIGINAL</div>
+      <canvas id="panel-left" width="620" height="440"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-label"><b>RIGHT</b> — FIND THE CHANGES</div>
+      <canvas id="panel-right" width="620" height="440"></canvas>
+    </div>
+  </main>
+  <footer id="help">Click a difference on either picture &nbsp;·&nbsp; Arrow keys move the crosshair, Enter marks it &nbsp;·&nbsp; H hint &nbsp;·&nbsp; M magnifier &nbsp;·&nbsp; P pause</footer>
+  <div id="crosshair"></div>
+  <canvas id="lens" width="220" height="220"></canvas>
+
+  <div id="overlay-menu" class="overlay show">
+    <h1>TWIN LANTERNS</h1>
+    <p class="sub">A spot-the-difference hunt across five hand-drawn scenes. Two pictures hang side by side — seven small changes hide between them.</p>
+    <div class="rules">
+      <div>🔍 <b>Click</b> a difference on either picture to ring it in gold.</div>
+      <div>⏱️ <b>120 seconds</b> a scene — each find adds 5 seconds, a wrong click costs 3.</div>
+      <div>✨ <b>Hints</b> (H) point at a hiding change — 3 a scene, 50 points each.</div>
+      <div>🔎 <b>Magnifier</b> (M) zooms the picture under your mouse. Arrows + Enter play by keyboard.</div>
+    </div>
+    <div class="scenes">1 Lantern Market · 2 Coral Reef · 3 Snowfall Village · 4 Desert Caravan · 5 Clockwork Garden</div>
+    <button id="play-btn" class="big-btn" type="button">▶ &nbsp;Start the hunt</button>
+  </div>
+
+  <div id="overlay-done" class="overlay">
+    <h2 id="done-title">Scene complete!</h2>
+    <p class="detail" id="done-detail"></p>
+    <button id="next-btn" class="big-btn" type="button">Next scene →</button>
+  </div>
+
+  <div id="overlay-over" class="overlay">
+    <h2 id="over-title">You found them all!</h2>
+    <p class="detail" id="over-detail"></p>
+    <p class="sub" id="over-sub"></p>
+    <button id="again-btn" class="big-btn" type="button">↻ &nbsp;Play again</button>
+  </div>
+
+  <div id="overlay-pause" class="overlay">
+    <h2>Paused</h2>
+    <p class="detail">The lanterns wait. The clock is stopped.</p>
+    <button id="resume-btn" class="big-btn" type="button">Resume</button>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
